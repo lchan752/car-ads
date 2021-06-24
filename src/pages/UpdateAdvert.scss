@@ -10,4 +10,12 @@
   &__submit {
     @include button(true);
   }
+  &__picture {
+    & label {
+      @include button(true, black, auto, auto, "hollow");
+    }
+    & input {
+      display: none;
+    }
+  }
 }

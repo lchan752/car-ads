@@ -1,7 +1,8 @@
 import 'pages/UpdateAdvert.scss'
 import React from 'react'
 import {
-  db
+  db,
+  storage,
 } from 'lib/firebase'
 import {
   useForm
@@ -16,6 +17,7 @@ export default function UpdateAdvert() {
   const match = useRouteMatch()
   const history = useHistory()
   const [error, setError] = React.useState('')
+  const [pictureURL, setPictureURL] = React.useState('')
 
   React.useEffect(() => {
     const advert_id = match.params.advert_id
@@ -24,6 +26,7 @@ export default function UpdateAdvert() {
         const data = doc.data()
         const options = { shouldValidate: true, shouldDirty: false }
         form.setValue('description', data.description, options)
+        form.setValue('picture', data.picture, options)
       } else {
         let error_message = `Advert with ID=${advert_id} does not exists`
         setError(error_message)
@@ -39,6 +42,15 @@ export default function UpdateAdvert() {
     }).catch(err => setError(err))
   }
 
+  function onPictureUploaded(e) {
+    const file = e.target.files[0]
+    const path = `adverts/${file.name}`
+    storage.ref(path).put(file).then(snap => {
+      form.setValue('picture', path)
+      snap.ref.getDownloadURL().then(url => setPictureURL(url))
+    }).catch(err => setError(err))
+  }
+
   return (
     <form className='updateadvert' onSubmit={form.handleSubmit(onUpdate)}>
       <h4 className='updateadvert__title'>Update Advert</h4>
@@ -46,6 +58,14 @@ export default function UpdateAdvert() {
         <label>Description</label>
         <input type='text' name='description' {...form.register("description")}></input>
       </div>
+      <div className='updateadvert__picture'>
+        <label htmlFor='picture'>Upload Another Picture</label>
+        <input type='file' accept="image/*" id="picture" onChange={onPictureUploaded}></input>
+        <input type='hidden' name='picture' {...form.register("picture")}></input>
+      </div>
+      { pictureURL ? (
+        <img src={pictureURL}></img>
+      ) : null }
       {error ? <p className='updateadvert__error'>{error}</p> : null}
       <input
         type='submit'

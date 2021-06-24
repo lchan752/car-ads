@@ -7,6 +7,7 @@ export class Advert {
     this.id = id
     this.created_at = DateTime.fromISO(data.created_at)
     this.description = data.description
+    this.picture = data.picture
   }
 
   get created_at_label() {

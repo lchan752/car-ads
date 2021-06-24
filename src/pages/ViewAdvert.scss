@@ -1,7 +1,12 @@
 @import 'base.scss';
 
 .viewadvert {
-  @include callout;
+  &__card {
+    @include callout;
+  }
+  &__picture {
+    margin-bottom: 1rem;
+  }
   &__update {
     @include button(true);
   }

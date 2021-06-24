@@ -1,18 +1,20 @@
 import 'pages/ViewAdvert.scss'
 import React from 'react'
-import { 
-  Advert 
+import {
+  Advert
 } from 'lib/dataclasses'
-import { 
-  db 
+import {
+  db,
+  storage
 } from 'lib/firebase'
-import { 
+import {
   useRouteMatch,
   Link,
 } from 'react-router-dom'
 
 export default function ViewAdvert() {
   const [advert, setAdvert] = React.useState()
+  const [pictureURL, setPictureURL] = React.useState()
   const match = useRouteMatch()
 
   React.useEffect(() => {
@@ -20,22 +22,28 @@ export default function ViewAdvert() {
     const unsubscribe = db.collection('adverts').doc(advert_id).onSnapshot(doc => {
       let advert = new Advert(doc.id, doc.data())
       setAdvert(advert)
+      if (advert.picture) {
+        storage.ref(advert.picture).getDownloadURL().then(url => setPictureURL(url))
+      }
     })
     return unsubscribe
   }, [])
-  
+
   return (
     <div className='viewadvert'>
-      <dl>
+      <dl className='viewadvert__card'>
         <dt>ID</dt>
-        <dd>{ advert?.id || 'N/A' }</dd>
+        <dd>{advert?.id || 'N/A'}</dd>
         <dt>Created at</dt>
-        <dd>{ advert?.created_at_label || 'N/A' }</dd>
+        <dd>{advert?.created_at_label || 'N/A'}</dd>
         <dt>Description</dt>
-        <dd>{ advert?.description || 'N/A' }</dd>
+        <dd>{advert?.description || 'N/A'}</dd>
       </dl>
+      {pictureURL ? (
+        <img className='viewadvert__picture' src={pictureURL}></img>
+      ) : null}
       {advert ? (
-        <Link to={ advert.update_url } className='viewadvert__update'>Update Advert</Link>
+        <Link to={advert.update_url} className='viewadvert__update'>Update Advert</Link>
       ) : null}
     </div>
   )
