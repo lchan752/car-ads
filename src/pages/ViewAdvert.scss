@@ -1,0 +1,8 @@
+@import 'base.scss';
+
+.viewadvert {
+  @include callout;
+  &__update {
+    @include button(true);
+  }
+}

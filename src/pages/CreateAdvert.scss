@@ -1,0 +1,13 @@
+@import 'base.scss';
+
+.createadvert {
+  &__title {
+    border-bottom: thin solid $black;
+  }
+  &__error {
+    @include callout($alert-color);
+  }
+  &__submit {
+    @include button(true);
+  }
+}

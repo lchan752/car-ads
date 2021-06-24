@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import { 
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+ } from 'react-router-dom';
+import ListAdverts from 'pages/ListAdverts';
+import CreateAdvert from 'pages/CreateAdvert';
+import UpdateAdvert from 'pages/UpdateAdvert';
+import ViewAdvert from 'pages/ViewAdvert';
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <nav className='topnav'>
+        <ul>
+          <li className='topnav__brand'>
+            <Link to='/'>Car Adverts</Link>
+          </li>
+          <li className='topnav__link'>
+            <Link to='/login'>Login</Link>
+          </li>
+        </ul>
+      </nav>
+      <div className='app'>
+        <Switch>
+          <Route path='/' exact component={ListAdverts}></Route>
+          <Route path='/adverts/create' component={CreateAdvert}></Route>
+          <Route path='/adverts/:advert_id/update' component={UpdateAdvert}></Route>
+          <Route path='/adverts/:advert_id' component={ViewAdvert}></Route>
+          <Route path='/adverts' component={ListAdverts}></Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
-
-export default App;

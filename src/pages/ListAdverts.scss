@@ -1,0 +1,19 @@
+@import 'base.scss';
+
+.listadverts {
+  &__title {
+    border-bottom: thin solid $black;
+  }
+  &__callout {
+    @include callout;
+  }
+  &__table {
+    @include table;
+  }
+  &__create {
+    @include button(true);
+  }
+  &__action {
+    margin-right: 0.5rem;
+  }
+}

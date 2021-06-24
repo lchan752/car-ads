@@ -1,0 +1,42 @@
+@import 'base.scss';
+
+$topbar-height: 3rem;
+
+.topnav {
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+  & ul {
+    @include scut-list-unstyled;
+    margin: 0;
+    background-color: $topbar-background;
+    display: flex;
+    align-items: center;
+    height: $topbar-height;
+  }
+
+  & a {
+    text-decoration: none;
+    color: $topbar-color;
+  }
+
+  &__brand {
+    flex: 1 0 auto;
+    color: $topbar-color;
+    margin-left: 0.5rem;
+    font-weight: bold;
+  }
+
+  &__link {
+    flex: 0 0 auto;
+    margin-right: 0.5rem;
+  }
+}
+
+.app {
+  @include scut-center-block(90%);
+  @include breakpoint(medium) {
+    @include scut-center-block(60%);
+  }
+  padding-top: $topbar-height + 1rem;
+}
