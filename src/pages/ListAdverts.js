@@ -22,14 +22,14 @@ export default function ListAdverts() {
         adverts.push(advert)
       })
       setAdverts(adverts)
-    })
+    }, err => setError(err.message))
     return unsubscribe
   }, [])
 
   function onDelete(advert) {
     db.collection('adverts').doc(advert.id).delete().then(() => {
       console.log('advert deleted')
-    }).catch(err => setError(err))
+    }).catch(err => setError(err.message))
   }
   
   return (

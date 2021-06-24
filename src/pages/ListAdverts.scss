@@ -16,4 +16,7 @@
   &__action {
     margin-right: 0.5rem;
   }
+  &__error {
+    @include callout($alert-color);
+  }
 }

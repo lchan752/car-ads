@@ -4,12 +4,12 @@ import "firebase/firestore";
 import "firebase/storage";
 
 firebase.initializeApp({
-  apiKey: "AIzaSyCE6FtoHcZch1Zmdu0uytDFkfnyfooJQVI",
-  authDomain: "car-ads-leo.firebaseapp.com",
-  projectId: "car-ads-leo",
-  storageBucket: "car-ads-leo.appspot.com",
-  messagingSenderId: "93428346535",
-  appId: "1:93428346535:web:13372b72817759dbf2f582"
+  apiKey: process.env.REACT_APP_APIKEY,
+  authDomain: process.env.REACT_APP_AUTHDOMAIN,
+  projectId: process.env.REACT_APP_PROJECTID,
+  storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
+  appId: process.env.REACT_APP_APPID,
 });
 
 export const auth = firebase.auth();

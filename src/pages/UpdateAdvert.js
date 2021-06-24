@@ -31,7 +31,7 @@ export default function UpdateAdvert() {
         let error_message = `Advert with ID=${advert_id} does not exists`
         setError(error_message)
       }
-    }).catch(err => setError(err))
+    }).catch(err => setError(err.message))
   }, [])
 
   function onUpdate(data) {
@@ -39,7 +39,7 @@ export default function UpdateAdvert() {
     db.collection('adverts').doc(advert_id).update(data).then(() => {
       let url = `/adverts/${advert_id}`
       history.push(url)
-    }).catch(err => setError(err))
+    }).catch(err => setError(err.message))
   }
 
   function onPictureUploaded(e) {
@@ -48,7 +48,7 @@ export default function UpdateAdvert() {
     storage.ref(path).put(file).then(snap => {
       form.setValue('picture', path)
       snap.ref.getDownloadURL().then(url => setPictureURL(url))
-    }).catch(err => setError(err))
+    }).catch(err => setError(err.message))
   }
 
   return (

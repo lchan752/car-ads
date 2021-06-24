@@ -15,6 +15,7 @@ import {
 export default function ViewAdvert() {
   const [advert, setAdvert] = React.useState()
   const [pictureURL, setPictureURL] = React.useState()
+  const [error, setError] = React.useState('')
   const match = useRouteMatch()
 
   React.useEffect(() => {
@@ -25,26 +26,29 @@ export default function ViewAdvert() {
       if (advert.picture) {
         storage.ref(advert.picture).getDownloadURL().then(url => setPictureURL(url))
       }
-    })
+    }, err => setError(err.message))
     return unsubscribe
   }, [])
 
   return (
     <div className='viewadvert'>
-      <dl className='viewadvert__card'>
-        <dt>ID</dt>
-        <dd>{advert?.id || 'N/A'}</dd>
-        <dt>Created at</dt>
-        <dd>{advert?.created_at_label || 'N/A'}</dd>
-        <dt>Description</dt>
-        <dd>{advert?.description || 'N/A'}</dd>
-      </dl>
+      {advert ? (
+        <dl className='viewadvert__card'>
+          <dt>ID</dt>
+          <dd>{advert?.id || 'N/A'}</dd>
+          <dt>Created at</dt>
+          <dd>{advert?.created_at_label || 'N/A'}</dd>
+          <dt>Description</dt>
+          <dd>{advert?.description || 'N/A'}</dd>
+        </dl>
+      ) : null}
       {pictureURL ? (
         <img className='viewadvert__picture' src={pictureURL}></img>
       ) : null}
       {advert ? (
         <Link to={advert.update_url} className='viewadvert__update'>Update Advert</Link>
       ) : null}
+      {error ? <p className='viewadvert__error'>{error}</p> : null}
     </div>
   )
 }

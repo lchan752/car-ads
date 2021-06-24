@@ -1,0 +1,10 @@
+@import 'base.scss';
+
+.login {
+  &__submit {
+    @include button(true);
+  }
+  &__error {
+    @include callout($alert-color);
+  }
+}

@@ -28,7 +28,7 @@ export default function CreateAdvert() {
     }).then(doc => {
       let url = `/adverts/${doc.id}`
       history.push(url)
-    }).catch(err => setError(err))
+    }).catch(err => setError(err.message))
   }
 
   function onPictureUploaded(e) {
@@ -37,7 +37,7 @@ export default function CreateAdvert() {
     storage.ref(path).put(file).then(snap => {
       form.setValue('picture', path)
       snap.ref.getDownloadURL().then(url => setPictureURL(url))
-    }).catch(err => setError(err))
+    }).catch(err => setError(err.message))
   }
   
   return (

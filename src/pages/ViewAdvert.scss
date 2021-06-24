@@ -10,4 +10,7 @@
   &__update {
     @include button(true);
   }
+  &__error {
+    @include callout($alert-color);
+  }
 }
